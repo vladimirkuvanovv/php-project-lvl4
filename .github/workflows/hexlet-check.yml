@@ -2,8 +2,7 @@ name: hexlet-check
 
 on:
   push:
-    branches:
-      - main
+    branches: [ master ]
 
 jobs:
   build:
@@ -11,5 +10,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Hexlet project check
-        uses: hexlet/project-action@release
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          extensions: mbstring, curl, dom, xml, zip, sqlite
+          tools: prestissimo
+          php-version: '7.4'
+
+      - name: Setup project
+        run: make setup
+
+      - name: Check lint
+        run: make lint
+
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: make test
+
+      - name: PHP Security Checker
+        uses: StephaneBour/actions-php-security-checker@1.0
