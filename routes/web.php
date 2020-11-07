@@ -1,6 +1,9 @@
 <?php
 
+use App\Mail\JustTesting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +18,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/send-mail', function () {
+
+//    Mail::to('newuser@example.com')->send(new JustTesting());
+    Mail::send(new JustTesting());
+
+    return 'A message has been sent to Mailtrap!';
+
 });
