@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\TaskStatusesController;
 use App\Mail\JustTesting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,13 +19,12 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [IndexController::class, 'index'])->name('index');
+
+Route::resource('task_statuses', TaskStatusesController::class);
 
 Route::get('/send-mail', function () {
 
@@ -31,4 +33,8 @@ Route::get('/send-mail', function () {
 
     return 'A message has been sent to Mailtrap!';
 
+});
+
+Route::fallback(function () {
+    abort(404, 'Oops, page not found');
 });
