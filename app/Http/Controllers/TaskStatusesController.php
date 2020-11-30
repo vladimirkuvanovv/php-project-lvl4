@@ -41,13 +41,11 @@ class TaskStatusesController extends Controller
             'name' => 'required|max:20'
         ]);
 
-        $taskStatus = new TaskStatus();
-        $taskStatus->fill([
-            'name' => $data['name'],
-            'created_at' => Carbon::now('Europe/Moscow'),
-            'updated_at' => Carbon::now('Europe/Moscow'),
-        ]);
-        $taskStatus->save();
+        TaskStatus::create($data);
+
+//        $taskStatus = new TaskStatus();
+//        $taskStatus->fill($data);
+//        $taskStatus->save();
 
         flash('Task status was successful save!')->success();
 
@@ -90,11 +88,7 @@ class TaskStatusesController extends Controller
             'name' => 'required|max:20|unique:task_statuses,name,' . $taskStatus->id,
         ]);
 
-        $taskStatus->fill([
-            'name' => $data['name'],
-            'updated_at' => Carbon::now('Europe/Moscow'),
-        ]);
-
+        $taskStatus->fill($data);
         $taskStatus->save();
 
         flash('Status was successful update')->success();
@@ -109,11 +103,7 @@ class TaskStatusesController extends Controller
      */
     public function destroy($id)
     {
-        $taskStatus = TaskStatus::findOrFail($id);
-
-        if ($taskStatus) {
-            $taskStatus->delete();
-        }
+        TaskStatus::destroy($id);
 
         return redirect()->route('task_statuses.index');
     }
