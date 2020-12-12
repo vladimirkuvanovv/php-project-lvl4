@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\TaskCommentController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\LabelController;
 use App\Http\Controllers\TaskStatusesController;
 use App\Mail\JustTesting;
 use Illuminate\Support\Facades\Auth;
@@ -26,14 +29,11 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 
 Route::resource('task_statuses', TaskStatusesController::class);
 
-Route::get('/send-mail', function () {
+Route::resource('tasks', TaskController::class);
 
-//    Mail::to('newuser@example.com')->send(new JustTesting());
-    Mail::send(new JustTesting());
+Route::resource('labels', LabelController::class);
 
-    return 'A message has been sent to Mailtrap!';
-
-});
+Route::resource('task.comments', TaskCommentController::class);
 
 Route::fallback(function () {
     abort(404, 'Oops, page not found');
