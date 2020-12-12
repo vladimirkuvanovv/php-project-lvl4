@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\TaskStatus;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +14,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        $this->call(TaskStatusesSeeder::class);
+        $this->call(
+            [
+                TaskStatusesSeeder::class,
+                LabelSeeder::class,
+                TaskSeeder::class,
+                UserSeeder::class,
+            ]
+        );
     }
 }
