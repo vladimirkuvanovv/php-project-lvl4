@@ -21,6 +21,9 @@ log:
 test:
 	php artisan test
 
+test_stop:
+	php artisan test --testsuite=Feature --stop-on-failure
+
 deploy:
 	git push heroku master
 
@@ -29,3 +32,10 @@ lint:
 
 lint-fix:
 	composer phpcbf
+
+clean:
+	php artisan cache:clear
+	php artisan optimize
+	php artisan route:clear
+	php artisan view:clear
+	php artisan config:clear
