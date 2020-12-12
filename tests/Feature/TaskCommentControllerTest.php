@@ -27,7 +27,6 @@ class TaskCommentControllerTest extends TestCase
         $data = Arr::only($taskComment, ['comment']);
 
         $response = $this->post(route('task.comments.store', $task), $data);
-//        $data['user_id'] = $user->id;
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
