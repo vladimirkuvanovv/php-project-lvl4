@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Label;
 use App\Models\Task;
-use App\Models\TaskComment;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -99,7 +98,6 @@ class TaskController extends Controller
             'name'        => 'required|max:30',
             'description' => 'max:200',
             'status_id'   => 'numeric',
-//            'created_by_id' => \Auth::id(),
             'labels'      => 'array',
             'assigned_to_id' => 'numeric',
         ]);
