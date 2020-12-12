@@ -26,7 +26,6 @@ class TaskStatusesController extends Controller
     public function create()
     {
         $taskStatus = new TaskStatus();
-        dd($taskStatus);
 
         return view('task_statuses.create', compact('taskStatus'));
     }
