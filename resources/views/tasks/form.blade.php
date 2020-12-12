@@ -30,5 +30,14 @@
 
 <div class="form-group">
     {{ Form::label('labels', 'Labels', ['class' => 'control-label']) }}
-    {{ Form::select('labels', [], null, ['placeholder' => 'Labels', 'class' => 'form-control']) }}
+    {{ Form::select('labels[]', $labels, $taskLabels ?? null, ['class' => 'form-control', 'multiple' => 'multiple']) }}
 </div>
+
+{{--
+<div class="form-group">
+    <select class="selectpicker" multiple data-live-search="true">
+        <option>Mustard</option>
+        <option>Ketchup</option>
+        <option>Relish</option>
+    </select>
+</div>--}}

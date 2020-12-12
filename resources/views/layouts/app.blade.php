@@ -9,12 +9,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+{{--    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,900" rel="stylesheet">--}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -43,7 +41,7 @@
                                 taskStatuses
                             </a></li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('labels.index') }}" class="nav-link">
                                 labels
                             </a>
                         </li>
@@ -89,7 +87,16 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        @include('flash::message')
+{{--                        @yield('content')--}}
+                        @section('content')
+                        @show
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </body>
