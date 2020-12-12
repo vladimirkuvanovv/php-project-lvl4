@@ -3,9 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Label;
-use App\Models\Task;
 use App\Models\User;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Tests\TestCase;
 
@@ -81,7 +79,7 @@ class LabelControllerTest extends TestCase
     public function testDelete()
     {
         $label = Label::factory()->create();
-        $response = $this->delete(route('labels.destroy', [$label]));
+        $response = $this->delete(route('labels.destroy', $label->id));
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
