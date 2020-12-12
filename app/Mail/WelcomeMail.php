@@ -33,7 +33,6 @@ class WelcomeMail extends Mailable
         return $this->view('mails.welcome')
             ->with([
                 'name' => $this->data['name'],
-                'link' => 'http://shrouded-ravine-40892.herokuapp.com/'
             ]);
     }
 }
