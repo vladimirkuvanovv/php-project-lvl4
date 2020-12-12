@@ -26,6 +26,7 @@ class TaskStatusesController extends Controller
     public function create()
     {
         $taskStatus = new TaskStatus();
+        dd($taskStatus);
 
         return view('task_statuses.create', compact('taskStatus'));
     }
@@ -43,23 +44,9 @@ class TaskStatusesController extends Controller
 
         TaskStatus::create($data);
 
-//        $taskStatus = new TaskStatus();
-//        $taskStatus->fill($data);
-//        $taskStatus->save();
-
         flash('Task status was successful save!')->success();
 
         return redirect()->route('task_statuses.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

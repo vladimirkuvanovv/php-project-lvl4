@@ -2,20 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Label;
 use App\Models\Task;
+use App\Models\TaskComment;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @param  Request  $request
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::all();
+        $filter = $request->input('filter');
+
+        if ($filter) {
+            $tasks = QueryBuilder::for(Task::class)
+                ->allowedFilters([
+                    AllowedFilter::exact('status_id'),
+                    AllowedFilter::exact('created_by_id'),
+                    AllowedFilter::exact('assigned_to_id'),
+                ])
+                ->get();
+        } else {
+            $tasks = Task::all();
+        }
 
         $taskStatuses = TaskStatus::all()
             ->mapWithKeys(fn($taskStatus) => [$taskStatus->id => $taskStatus->name]);
@@ -24,7 +40,7 @@ class TaskController extends Controller
             ->mapWithKeys(fn($user) => [$user->id => $user->name]);
 
         $creators = $tasks
-            ->mapWithKeys(fn($task) => [$task->created_by_id => $users[$task->created_by_id]]);
+            ->mapWithKeys(fn($task) => [$task->created_by_id => $users[$task->created_by_id] ?? null]);
 
         $assignees = $tasks
             ->mapWithKeys(fn($task) => $task->assigned_to_id
@@ -38,7 +54,8 @@ class TaskController extends Controller
                 'creators'     => $creators ?? [],
                 'assignees'    => $assignees ?? [],
                 'taskStatuses' => $taskStatuses,
-                'users'        => $users
+                'users'        => $users,
+                'filter'       => $filter ?? [],
             ]
         );
     }
@@ -57,7 +74,18 @@ class TaskController extends Controller
         $users = User::all()
             ->mapWithKeys(fn($user) => [$user->id => $user->name]);
 
-        return view('tasks.create', compact('task', 'users', 'taskStatuses'));
+        $labels = Label::all()
+            ->mapWithKeys(fn($label) => [$label->id => $label->name]);
+
+        return view(
+            'tasks.create',
+            compact(
+                'task',
+                'users',
+                'taskStatuses',
+                'labels'
+            )
+        );
     }
 
     /**
@@ -68,19 +96,26 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $data = $this->validate($request, [
-            'name' => 'required|max:30',
+            'name'        => 'required|max:30',
             'description' => 'max:200',
-            'status_id' => 'numeric',
+            'status_id'   => 'numeric',
+//            'created_by_id' => \Auth::id(),
+            'labels'      => 'array',
             'assigned_to_id' => 'numeric',
         ]);
 
         $data['created_by_id'] = \Auth::id();
 
-        Task::create($data);
+        $task = Task::create($data);
+
+        if (isset($data['labels'])) {
+            $task->label()->attach($data['labels']);
+        }
 
         flash('Task was created!')->success();
 
-        return redirect()->route('tasks.index');
+        return redirect()
+            ->route('tasks.index');
     }
 
     /**
@@ -92,7 +127,10 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
 
-        return view('tasks.show', compact('task'));
+        $labels = $task->label()->get(['name'])->toArray();
+
+        return view('tasks.show', compact('task', 'labels')
+        );
     }
 
     /**
@@ -110,7 +148,20 @@ class TaskController extends Controller
         $users = User::all()
             ->mapWithKeys(fn($user) => [$user->id => $user->name]);
 
-        return view('tasks.edit', compact('task', 'taskStatuses', 'users'));
+        $taskLabels = $task->label()->allRelatedIds()->all();
+
+        $labels = Label::all()->mapWithKeys(fn($label) => [$label->id => $label->name]);;
+
+        return view(
+            'tasks.edit',
+            compact(
+                'task',
+                'taskStatuses',
+                'users',
+                'labels',
+                'taskLabels'
+            )
+        );
     }
 
     /**
@@ -124,16 +175,24 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
 
         $data = $this->validate($request, [
-            'name' => 'required|max:30|unique:tasks,name,' . $task->id,
-            'description' => 'max:200',
-            'status_id' => 'numeric',
+            'name'           => 'required|max:30|unique:tasks,name,' . $task->id,
+            'status_id'      => 'numeric',
+            'labels'         => 'array',
             'assigned_to_id' => 'numeric',
+            'description'    => 'max:200',
         ]);
 
         $task->fill($data);
         $task->save();
 
-        flash('Task was successful update')->success();
+        $taskLabels = $task->label()->allRelatedIds();
+
+        if (isset($data['labels'])) {
+            $newLabels = collect($data['labels'])->diff($taskLabels);
+            $task->label()->attach($newLabels);
+        }
+
+        flash('Task was successful update!')->success();
 
         return redirect()->route('tasks.index');
     }
@@ -147,6 +206,8 @@ class TaskController extends Controller
     {
         Task::destroy($id);
 
-        return redirect()->route('tasks.index');
+        return redirect()
+            ->route('tasks.index')
+            ->with('success', 'Task was removed successfully!');;
     }
 }

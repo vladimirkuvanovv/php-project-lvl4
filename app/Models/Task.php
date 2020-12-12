@@ -21,4 +21,14 @@ class Task extends Model
     {
         return $this->belongsTo(TaskStatus::class, 'status_id');
     }
+
+    public function label()
+    {
+        return $this->belongsToMany(Label::class)->withTimestamps();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(TaskComment::class);
+    }
 }

@@ -3,20 +3,22 @@
 namespace Tests\Feature;
 
 use App\Models\TaskStatus;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Tests\TestCase;
 
 class TaskStatusesControllerTest extends TestCase
 {
-    protected $status;
+    protected $user;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         TaskStatus::factory()->count(2)->make();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
     }
 
     public function testIndex()
@@ -29,6 +31,7 @@ class TaskStatusesControllerTest extends TestCase
     public function testCreate()
     {
         $response = $this->get('task_statuses.create');
+//        dd($response);
 
         $response->assertOk();
     }
@@ -36,9 +39,10 @@ class TaskStatusesControllerTest extends TestCase
     public function testEdit()
     {
         $task_status = TaskStatus::factory()->create();
+
         $response = $this->get(route('task_statuses.edit', [$task_status]));
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function testStore()
