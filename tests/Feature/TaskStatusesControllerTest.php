@@ -15,8 +15,6 @@ class TaskStatusesControllerTest extends TestCase
     {
         parent::setUp();
 
-        TaskStatus::factory()->count(2)->make();
-
         $this->user = User::factory()->create();
         $this->actingAs($this->user);
     }

@@ -23,10 +23,12 @@ class TaskFactory extends Factory
      */
     public function definition()
     {
+        $user = User::factory()->create();
+
         return [
             'name'           => $this->faker->word,
             'status_id'      => $this->faker->numberBetween(1, 4),
-            'assigned_to_id' => 1,
+            'assigned_to_id' => $user->id,
             'description'    => $this->faker->sentence(5),
         ];
     }

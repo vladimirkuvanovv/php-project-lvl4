@@ -15,12 +15,12 @@ class TaskStatusesSeeder extends Seeder
      */
     public function run()
     {
-/*        foreach (['новый', 'в работе', 'на тестировании', 'завершен'] as $status) {
+        foreach (['новый', 'в работе', 'на тестировании', 'завершен'] as $status) {
             DB::table('task_statuses')->insert([
                 'name' => $status,
             ]);
-        }*/
+        }
 
-        TaskStatus::factory(5)->create();
+//        TaskStatus::factory(4)->create();
     }
 }

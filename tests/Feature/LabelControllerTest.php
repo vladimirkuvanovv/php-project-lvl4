@@ -15,8 +15,6 @@ class LabelControllerTest extends TestCase
     {
         parent::setUp();
 
-        Label::factory()->count(2)->make();
-
         $this->user = User::factory()->create();
         $this->actingAs($this->user);
     }
@@ -30,9 +28,7 @@ class LabelControllerTest extends TestCase
 
     public function testCreate()
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get(route('labels.create'));
+        $response = $this->actingAs($this->user)->get(route('labels.create'));
 
         $response->assertOk();
     }
@@ -53,9 +49,7 @@ class LabelControllerTest extends TestCase
             'description'
         ]);
 
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->post(route('labels.store'), $data);
+        $response = $this->actingAs($this->user)->post(route('labels.store'), $data);
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
