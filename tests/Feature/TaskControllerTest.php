@@ -44,8 +44,9 @@ class TaskControllerTest extends TestCase
     public function testStore()
     {
         $task = Task::factory()
-            ->make(['created_by_id' => $this->user->id])
+            ->make()
             ->toArray();
+
         $data = Arr::only(
             $task,
             [
@@ -67,7 +68,8 @@ class TaskControllerTest extends TestCase
     public function testUpdate()
     {
         $task = Task::factory()->create(['created_by_id' => $this->user->id]);
-        $data = Task::factory()->make()->toArray();
+
+        $data = Task::factory()->make(['created_by_id' => $this->user->id])->toArray();
 
         $response = $this->patch(route('tasks.update', $task->id), $data);
 
