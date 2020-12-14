@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -102,9 +103,9 @@ class TaskController extends Controller
             'assigned_to_id' => 'numeric',
         ]);
 
-        $data['created_by_id'] = \Auth::id();
+        $user = Auth::user();
 
-        $task = Task::create($data);
+        $task = $user->tasks()->create($data);
 
         if (isset($data['labels'])) {
             $task->label()->attach($data['labels']);
