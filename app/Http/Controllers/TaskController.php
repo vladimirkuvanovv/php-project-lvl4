@@ -43,12 +43,14 @@ class TaskController extends Controller
             ->mapWithKeys(fn($task) => [$task->created_by_id => $users[$task->created_by_id] ?? null]);
 
         $assignees = $tasks
-            ->mapWithKeys(fn($task) => $task->assigned_to_id
-                ? [$task->assigned_to_id => $users[$task->assigned_to_id]]
-                : []
+            ->mapWithKeys(
+                fn($task) => $task->assigned_to_id
+                    ? [$task->assigned_to_id => $users[$task->assigned_to_id]]
+                    : []
             );
 
-        return view('tasks.index',
+        return view(
+            'tasks.index',
             [
                 'tasks'        => $tasks,
                 'creators'     => $creators ?? [],
@@ -128,8 +130,7 @@ class TaskController extends Controller
 
         $labels = $task->label()->get(['name'])->toArray();
 
-        return view('tasks.show', compact('task', 'labels')
-        );
+        return view('tasks.show', compact('task', 'labels'));
     }
 
     /**
@@ -149,7 +150,7 @@ class TaskController extends Controller
 
         $taskLabels = $task->label()->allRelatedIds()->all();
 
-        $labels = Label::all()->mapWithKeys(fn($label) => [$label->id => $label->name]);;
+        $labels = Label::all()->mapWithKeys(fn($label) => [$label->id => $label->name]);
 
         return view(
             'tasks.edit',
@@ -207,6 +208,6 @@ class TaskController extends Controller
 
         return redirect()
             ->route('tasks.index')
-            ->with('success', 'Task was removed successfully!');;
+            ->with('success', 'Task was removed successfully!');
     }
 }

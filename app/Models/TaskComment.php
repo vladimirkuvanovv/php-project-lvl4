@@ -21,7 +21,7 @@ class TaskComment extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function getCommentDate()
     {
         return Carbon::parse($this->created_at)->format('d.m.Y H:i');
