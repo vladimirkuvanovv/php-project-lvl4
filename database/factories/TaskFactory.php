@@ -28,6 +28,7 @@ class TaskFactory extends Factory
         return [
             'name'           => $this->faker->word,
             'status_id'      => $this->faker->numberBetween(1, 4),
+            'created_by_id'  => $user->id,
             'assigned_to_id' => $user->id,
             'description'    => $this->faker->sentence(5),
         ];
