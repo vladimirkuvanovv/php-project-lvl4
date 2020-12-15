@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Task: {{ $task->name }}
+    <h1>{{ __('task.title') }}: {{ $task->name }}
         <a href="{{ route('tasks.edit', $task) }}">&#9881;</a>
     </h1>
 
-    <p>Name: {{ $task->name }}</p>
-    <p>Status: {{ $task->status->name }}</p>
+    <p>{{ __('task.name') }}: {{ $task->name }}</p>
+    <p>{{ __('task.status') }}: {{ $task->status->name }}</p>
 
     @if($task->description)
-        <p>Description: {{ $task->description }}</p>
+        <p>{{ __('task.description') }}: {{ $task->description }}</p>
     @endif
 
     @if($labels)
-        <p>Labels:</p>
+        <p>{{ __('task.labels') }}:</p>
         <ul>
             @foreach($labels ?? [] as $label)
                 <li>{{ $label['name'] }}</li>
@@ -21,15 +21,15 @@
         </ul>
     @endif
 
-    <h2>Comments</h2>
+    <h2>{{ __('task.comments') }}</h2>
 
     @if(Auth::check())
         {{ Form::open(['url' => route('task.comments.store', $task), 'method' => 'POST' , 'class' => 'w-50']) }}
             <div class="form-group">
-                {{ Form::label('comment', 'Content', ['class' => 'control-label']) }}
+                {{ Form::label('comment', __('task.content'), ['class' => 'control-label']) }}
                 {{ Form::textarea('comment', null, ['class' => 'form-control']) }}
             </div>
-            {{ Form::submit('Create', ['class' => 'btn btn-primary']) }}
+            {{ Form::submit(__('task.create_btn'), ['class' => 'btn btn-primary']) }}
         {{ Form::close() }}
     @endif
 

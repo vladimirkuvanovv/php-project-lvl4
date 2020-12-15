@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2>Add New Task Status</h2>
+    <h2>{{ __('task_status.create_title') }}</h2>
 
     {{ Form::model($taskStatus, ['url' => route('task_statuses.store'), 'method' => 'POST' , 'class' => 'w-50']) }}
             @include('task_statuses.form')
-            {{ Form::submit('Create', ['class' => 'btn btn-primary']) }}
+            {{ Form::submit(__('task_status.create_btn'), ['class' => 'btn btn-primary']) }}
     {{ Form::close() }}
 @endsection

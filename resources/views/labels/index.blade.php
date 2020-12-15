@@ -1,24 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2 class="mb-5">Labels</h2>
+    <h2 class="mb-5">{{ __('label.title') }}</h2>
 
     <div class="d-flex">
         @if(Auth::check())
-            <a href="{{ route('labels.create') }}" class="btn btn-primary">Add New</a>
+            <a href="{{ route('labels.create') }}" class="btn btn-primary">{{ __('label.add_new_btn') }}</a>
         @endif
     </div>
 
     <table class="table mt-2">
         <thead>
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Created At</th>
+            <th scope="col">{{ __('label.id') }}</th>
+            <th scope="col">{{ __('label.name') }}</th>
+            <th scope="col">{{ __('label.description') }}</th>
+            <th scope="col">{{ __('label.created_at') }}</th>
 
             @if(Auth::check())
-                <th scope="col">Actions</th>
+                <th scope="col">{{ __('label.actions') }}</th>
             @endif
         </tr>
         </thead>
@@ -32,8 +32,8 @@
 
                     @if(Auth::check())
                         <td>
-                            <a href="{{ route('labels.destroy', $label) }}" data-confirm="Вы уверены?" class="remove-btn" data-method="delete" rel="nofollow">Remove</a>
-                            <a href="{{ route('labels.edit', $label) }}" rel="nofollow" class="edit-btn">Edit</a>
+                            <a href="{{ route('labels.destroy', $label) }}" data-confirm="Вы уверены?" class="remove-btn" data-method="delete" rel="nofollow">{{ __('label.remove') }}</a>
+                            <a href="{{ route('labels.edit', $label) }}" rel="nofollow" class="edit-btn">{{ __('label.edit') }}</a>
                         </td>
                     @endif
                 </tr>

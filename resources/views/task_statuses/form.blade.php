@@ -9,6 +9,6 @@
 @endif
 
 <div class="form-group">
-    {{ Form::label('name', 'Name', ['class' => 'control-label']) }}
+    {{ Form::label('name', __('task_status.name'), ['class' => 'control-label']) }}
     {{ Form::text('name', null, ['class' => 'form-control']) }}
 </div>

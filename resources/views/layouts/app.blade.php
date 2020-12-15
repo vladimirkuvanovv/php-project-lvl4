@@ -33,16 +33,16 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a href="{{ route('tasks.index') }}" class="nav-link">
-                                tasks
+                                {{ __('header.tasks') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('task_statuses.index') }}" class="nav-link">
-                                taskStatuses
+                                {{ __('header.statuses') }}
                             </a></li>
                         <li class="nav-item">
                             <a href="{{ route('labels.index') }}" class="nav-link">
-                                labels
+                                {{ __('header.labels') }}
                             </a>
                         </li>
                     </ul>
@@ -91,7 +91,6 @@
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         @include('flash::message')
-{{--                        @yield('content')--}}
                         @section('content')
                         @show
                     </div>
