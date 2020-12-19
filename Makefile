@@ -33,7 +33,7 @@ test:
 	php artisan test
 
 test-coverage:
-	composer phpunit tests -- --coverage-clover build/logs/clover.xml
+	composer test -- --coverage-clover build/logs/clover.xml
 
 test-stop:
 	php artisan test --testsuite=Feature --stop-on-failure
