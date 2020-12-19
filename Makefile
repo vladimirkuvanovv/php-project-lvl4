@@ -8,6 +8,17 @@ setup:
 	touch database/database.sqlite || true
 	php artisan migrate
 	php artisan db:seed
+	npm install @rails/ujs
+	npm run watch
+
+setup-local:
+	composer install
+	cp -n .env.example .env || true
+	php artisan key:gen --ansi
+	php artisan migrate
+	php artisan db:seed
+	npm install @rails/ujs
+	npm run watch
 
 migrate:
 	php artisan migrate
@@ -21,14 +32,17 @@ log:
 test:
 	php artisan test
 
-test_stop:
+test-coverage:
+	php artisan test -- --coverage-clover build/logs/clover.xml
+
+test-stop:
 	php artisan test --testsuite=Feature --stop-on-failure
 
 deploy:
-	git push heroku master
+	git push heroku main
 
 lint:
-	composer run-script phpcs -- --standard=PSR12 app/ tests/ routes/
+	composer phpcs
 
 lint-fix:
 	composer phpcbf
@@ -39,3 +53,6 @@ clean:
 	php artisan route:clear
 	php artisan view:clear
 	php artisan config:clear
+
+watch:
+	npm run watch
