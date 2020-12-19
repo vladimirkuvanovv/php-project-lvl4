@@ -33,11 +33,9 @@ class TaskController extends Controller
             $tasks = Task::all();
         }
 
-        $taskStatuses = TaskStatus::all()
-            ->mapWithKeys(fn($taskStatus) => [$taskStatus->id => $taskStatus->name]);
+        $taskStatuses = TaskStatus::pluck('name', 'id');
 
-        $users = User::all()
-            ->mapWithKeys(fn($user) => [$user->id => $user->name]);
+        $users = User::pluck('name', 'id');
 
         $creators = $tasks
             ->mapWithKeys(fn($task) => [$task->created_by_id => $users[$task->created_by_id] ?? null]);
@@ -128,7 +126,7 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
 
-        $labels = $task->label()->get(['name'])->toArray();
+        $labels = $task->label()->get(['name']);
 
         return view('tasks.show', compact('task', 'labels'));
     }
