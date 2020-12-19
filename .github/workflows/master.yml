@@ -23,8 +23,14 @@ jobs:
       - name: Check lint
         run: make lint
 
-      - name: Execute tests (Unit and Feature tests) via PHPUnit
-        run: make test
+      - name: Execute tests (Unit and Feature tests) via PHPUnit & publish code coverage
+        uses: paambaati/codeclimate-action@v2.6.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: make test-coverage
+          coverageLocations: ${{github.workplace}}/build/logs/clover.xml:clover
+          debug: true
 
       - name: PHP Security Checker
         uses: StephaneBour/actions-php-security-checker@1.0
