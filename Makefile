@@ -9,7 +9,7 @@ setup:
 	php artisan migrate
 	php artisan db:seed
 	npm install @rails/ujs
-	npm run watch
+	npm install
 
 setup-local:
 	composer install
@@ -18,7 +18,7 @@ setup-local:
 	php artisan migrate
 	php artisan db:seed
 	npm install @rails/ujs
-	npm run watch
+	npm install
 
 migrate:
 	php artisan migrate
