@@ -40,7 +40,7 @@ class LabelController extends Controller
     public function store(Request $request)
     {
         $data = $this->validate($request, [
-            'name' => 'required|max:30',
+            'name' => 'required|max:30|unique:labels',
             'description' => 'max:200',
         ]);
 

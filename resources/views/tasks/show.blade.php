@@ -6,7 +6,7 @@
     </h1>
 
     <p>{{ __('task.name') }}: {{ $task->name }}</p>
-    <p>{{ __('task.status') }}: {{ $task->status->name }}</p>
+    <p>{{ __('task.status') }}: {{ optional($task->status)->name }}</p>
 
     @if($task->description)
         <p>{{ __('task.description') }}: {{ $task->description }}</p>
@@ -16,7 +16,7 @@
         <p>{{ __('task.labels') }}:</p>
         <ul>
             @foreach($labels ?? [] as $label)
-                <li>{{ $label['name'] }}</li>
+                <li>{{ $label->name }}</li>
             @endforeach
         </ul>
     @endif

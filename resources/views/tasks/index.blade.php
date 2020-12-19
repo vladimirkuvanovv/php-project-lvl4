@@ -36,19 +36,19 @@
             @foreach($tasks ?? [] as $task)
                 <tr>
                     <td>{{ $task->id }}</td>
-                    <td>{{ $taskStatuses[$task->status_id] ?? null }}</td>
+                    <td>{{ optional($task->status)->name }}</td>
                     <td><a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a></td>
-                    <td>{{ $users[$task->created_by_id] }}</td>
+                    <td>{{ optional($task->user)->name }}</td>
                     <td>{{ $users[$task->assigned_to_id] ?? '' }}</td>
                     <td>{{ $task->created_at }}</td>
 
                     @if(Auth::check())
                         <td>
-                            @if(Auth::id() === $task->created_by_id)
-                                <a href="{{ route('tasks.destroy', $task) }}" data-confirm="Вы уверены?" class="remove-btn" data-method="delete" rel="nofollow">
+                            @can('delete', $task)
+                                <a href="{{ route('tasks.destroy', $task->id) }}" data-confirm="Вы уверены?" class="remove-btn" data-method="delete" rel="nofollow">
                                     {{ __('task.remove') }}
                                 </a>
-                            @endif
+                            @endcan
                             <a href="{{ route('tasks.edit', $task) }}" rel="nofollow" class="edit-btn">{{ __('task.edit') }}</a>
                         </td>
                     @endif
