@@ -17,6 +17,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/select2/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/select2/select2-bootstrap4.min.css') }}" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/select2/select2.min.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -99,9 +103,5 @@
             </div>
         </main>
     </div>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/select2/select2.min.js') }}"></script>
 </body>
 </html>
