@@ -21,7 +21,6 @@
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
                                     {{ Form::checkbox('remember', null, old('remember') ? 'checked' : '', ['class' => 'form-check-input']) }}
-{{--                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>--}}
                                     {{ Form::label('remember', __('Remember Me'), ['class' => 'form-check-label']) }}
                                 </div>
                             </div>
