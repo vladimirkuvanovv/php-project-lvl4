@@ -20,7 +20,7 @@
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
-                                    {{ Form::checkbox('remember', null, old('remember') ? 'checked' : '', ['class' => 'form-check-input']) }}
+                                    {{ Form::checkbox('remember', 1, old('remember') ? 'checked' : '', ['class' => 'form-check-input']) }}
                                     {{ Form::label('remember', __('Remember Me'), ['class' => 'form-check-label']) }}
                                 </div>
                             </div>
