@@ -94,6 +94,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         @include('flash::message')
+                        @include('components.errors')
                         @section('content')
                         @show
                     </div>

@@ -15,7 +15,7 @@ class TaskCommentController extends Controller
      */
     public function store(Request $request, Task $task)
     {
-        $data = $request->validate([
+        $data = $this->validate($request,[
             'comment' => 'min:5',
         ]);
 

@@ -25,9 +25,7 @@
 
     @if(Auth::check())
         {{ Form::open(['url' => route('task.comments.store', $task), 'method' => 'POST' , 'class' => 'w-50']) }}
-            <div class="form-group">
-                {{ Form::textField('comment', __('task.content'), null) }}
-            </div>
+            {{ Form::textField('comment', __('task.content'), null) }}
             {{ Form::submit(__('task.create_btn'), ['class' => 'btn btn-primary']) }}
         {{ Form::close() }}
     @endif
