@@ -62,11 +62,6 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login');
-        }
-
         $task = new Task();
 
         $taskStatuses = TaskStatus::all()
@@ -96,6 +91,11 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
         $data = $this->validate($request, [
             'name'        => 'required|max:30',
             'description' => 'max:200',
@@ -103,8 +103,6 @@ class TaskController extends Controller
             'labels'      => 'array',
             'assigned_to_id' => 'numeric',
         ]);
-
-        $user = Auth::user();
 
         $task = $user->tasks()->create($data);
 
@@ -171,6 +169,11 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
         $task = Task::findOrFail($id);
 
         $data = $this->validate($request, [
