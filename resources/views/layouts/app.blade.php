@@ -15,12 +15,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css', true) }}" rel="stylesheet">
-    <link href="{{ asset('css/select2/select2.min.css', true) }}" rel="stylesheet">
-    <link href="{{ asset('css/select2/select2-bootstrap4.min.css', true) }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js', true) }}"></script>
-    <script src="{{ asset('js/select2/select2.min.js', true) }}"></script>
+
 </head>
 <body>
     <div id="app">
