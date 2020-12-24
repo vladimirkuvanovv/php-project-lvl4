@@ -32,8 +32,13 @@ class Task extends Model
         return $this->hasMany(TaskComment::class);
     }
 
-    public function user()
+    public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by_id');
+    }
+
+    public function assigneeTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to_id');
     }
 }
