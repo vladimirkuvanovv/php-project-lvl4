@@ -21,17 +21,13 @@ class TaskController extends Controller
     {
         $filter = $request->input('filter');
 
-        if ($filter) {
-            $tasks = QueryBuilder::for(Task::class)
-                ->allowedFilters([
-                    AllowedFilter::exact('status_id'),
-                    AllowedFilter::exact('created_by_id'),
-                    AllowedFilter::exact('assigned_to_id'),
-                ])
-                ->get();
-        } else {
-            $tasks = Task::all();
-        }
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedFilters([
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id'),
+            ])
+            ->get();
 
         $taskStatuses = TaskStatus::pluck('name', 'id');
 
@@ -51,11 +47,11 @@ class TaskController extends Controller
             'tasks.index',
             [
                 'tasks'        => $tasks,
-                'creators'     => $creators ?? [],
-                'assignees'    => $assignees ?? [],
+                'creators'     => $creators,
+                'assignees'    => $assignees,
                 'taskStatuses' => $taskStatuses,
                 'users'        => $users,
-                'filter'       => $filter ?? [],
+                'filter'       => $filter,
             ]
         );
     }
@@ -66,6 +62,11 @@ class TaskController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
         $task = new Task();
 
         $taskStatuses = TaskStatus::all()
