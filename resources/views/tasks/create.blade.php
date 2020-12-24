@@ -4,10 +4,12 @@
     <h2>{{ __('task.create_title') }}</h2>
 
     {{ Form::model($task, ['url' => route('tasks.store'), 'method' => 'POST' , 'class' => 'w-50']) }}
-        @include('layouts.components.errors')
-        @include('layouts.components.text', ['label' => __('task.name')])
-        @include('layouts.components.textarea', ['label' => __('task.description')])
-        @include('layouts.components.select')
+        @include('components.errors')
+        {{ Form::textInput('name', __('task.name'), null) }}
+        {{ Form::textField('description', __('task.description'), null) }}
+        {{ Form::selectField('status_id', __('task.status'), $taskStatuses, null, ['placeholder' => 'Status']) }}
+        {{ Form::selectField('assigned_to_id', __('task.assignee'), $users, null, ['placeholder' => 'Assignee']) }}
+        {{ Form::selectField('labels', __('task.labels'), $labels, null, ['class' => 'select-multiple', 'multiple' => 'multiple', 'name' => 'labels[]']) }}
         {{ Form::submit(__('task.create_btn'), ['class' => 'btn btn-primary']) }}
     {{ Form::close() }}
 @endsection

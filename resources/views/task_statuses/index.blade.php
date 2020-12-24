@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <tbody>
-            @foreach($taskStatuses ?? [] as $taskStatus)
+            @foreach($taskStatuses as $taskStatus)
                 <tr>
                     <td>{{ $taskStatus->id }}</td>
                     <td>{{ $taskStatus->name }}</td>

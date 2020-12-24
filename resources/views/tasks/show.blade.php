@@ -15,7 +15,7 @@
     @if($labels)
         <p>{{ __('task.labels') }}:</p>
         <ul>
-            @foreach($labels ?? [] as $label)
+            @foreach($labels as $label)
                 <li>{{ $label->name }}</li>
             @endforeach
         </ul>
@@ -26,14 +26,13 @@
     @if(Auth::check())
         {{ Form::open(['url' => route('task.comments.store', $task), 'method' => 'POST' , 'class' => 'w-50']) }}
             <div class="form-group">
-                {{ Form::label('comment', __('task.content'), ['class' => 'control-label']) }}
-                {{ Form::textarea('comment', null, ['class' => 'form-control']) }}
+                {{ Form::textField('comment', __('task.content'), null) }}
             </div>
             {{ Form::submit(__('task.create_btn'), ['class' => 'btn btn-primary']) }}
         {{ Form::close() }}
     @endif
 
-    @foreach($task->comments ?? [] as $comment)
+    @foreach($task->comments as $comment)
         <div class="mt-3 comments">
             <div class="media-list">
                 <div class="media">

@@ -1,4 +1,10 @@
 <div class="form-group">
+    {{ Form::label($name, $label, ['class' => 'control-label']) }}
+    {{ Form::select($name, $list, $selected, array_merge_recursive(['class' => 'form-control'], $attributes)) }}
+</div>
+
+{{--
+<div class="form-group">
     {{ Form::label('status_id', __('task.status'), ['class' => 'control-label']) }}
     {{ Form::select('status_id', $taskStatuses, $task->status->id ?? null, ['placeholder' => 'Status', 'class' => 'form-control']) }}
 </div>
@@ -11,4 +17,4 @@
 <div class="form-group">
     {{ Form::label('labels', __('task.labels'), ['class' => 'control-label']) }}
     {{ Form::select('labels[]', $labels, $taskLabels ?? null, ['class' => 'form-control select-multiple', 'multiple' => 'multiple']) }}
-</div>
+</div>--}}

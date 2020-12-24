@@ -23,6 +23,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "@rails/ujs": "^6.0.3-4"
+        "@rails/ujs": "^6.0.3-4",
+        "select2": "^4.0.13"
     }
 }

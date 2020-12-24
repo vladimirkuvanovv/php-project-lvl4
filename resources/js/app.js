@@ -1,5 +1,6 @@
 require('./bootstrap');
-require('./main');
+require('select2');
+require('./main.js');
 
 const ujs = require('@rails/ujs');
 ujs.start();

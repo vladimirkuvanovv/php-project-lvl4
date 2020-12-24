@@ -6,9 +6,9 @@
     <div class="d-flex">
         <div>
             {{ Form::open(['url' => route('tasks.index'), 'method' => 'GET' , 'class' => 'form-inline']) }}
-                {{ Form::select('filter[status_id]', $taskStatuses, $filter['status_id'] ?? null, ['placeholder' => __('task.status'), 'class' => 'form-control mr-2']) }}
-                {{ Form::select('filter[created_by_id]', $creators, $filter['created_by_id'] ?? null, ['placeholder' => __('task.creator'), 'class' => 'form-control mr-2']) }}
-                {{ Form::select('filter[assigned_to_id]', $assignees, $filter['assigned_to_id'] ?? null, ['placeholder' => __('task.assignee'), 'class' => 'form-control mr-2']) }}
+                {{ Form::select('filter[status_id]', $taskStatuses, $filter['status_id'] ?? '', ['placeholder' => __('task.status'), 'class' => 'form-control mr-2']) }}
+                {{ Form::select('filter[created_by_id]', $creators, $filter['created_by_id'] ?? '', ['placeholder' => __('task.creator'), 'class' => 'form-control mr-2']) }}
+                {{ Form::select('filter[assigned_to_id]', $assignees, $filter['assigned_to_id'] ?? '', ['placeholder' => __('task.assignee'), 'class' => 'form-control mr-2']) }}
                 {{ Form::submit(__('task.filter_btn'), ['class' => 'btn btn-primary']) }}
             {{ Form::close() }}
         </div>
@@ -33,13 +33,13 @@
         </tr>
         </thead>
         <tbody>
-            @foreach($tasks ?? [] as $task)
+            @foreach($tasks as $task)
                 <tr>
                     <td>{{ $task->id }}</td>
                     <td>{{ optional($task->status)->name }}</td>
                     <td><a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a></td>
-                    <td>{{ optional($task->user)->name }}</td>
-                    <td>{{ $users[$task->assigned_to_id] ?? '' }}</td>
+                    <td>{{ optional($task->createdBy)->name }}</td>
+                    <td>{{ optional($task->assigneeTo)->name }}</td>
                     <td>{{ $task->created_at }}</td>
 
                     @if(Auth::check())

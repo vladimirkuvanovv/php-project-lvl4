@@ -23,7 +23,7 @@
         </tr>
         </thead>
         <tbody>
-            @foreach($labels ?? [] as $label)
+            @foreach($labels as $label)
                 <tr>
                     <td>{{ $label->id }}</td>
                     <td>{{ $label->name }}</td>
