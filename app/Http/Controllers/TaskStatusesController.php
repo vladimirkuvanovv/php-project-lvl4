@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskStatusesController extends Controller
 {
@@ -36,6 +37,10 @@ class TaskStatusesController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()) {
+            return redirect()->route('login');
+        }
+
         $data = $this->validate($request, [
             'name' => 'required|max:20'
         ]);
@@ -67,6 +72,10 @@ class TaskStatusesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!Auth::user()) {
+            return redirect()->route('login');
+        }
+
         $taskStatus = TaskStatus::findOrFail($id);
 
         $data = $this->validate($request, [

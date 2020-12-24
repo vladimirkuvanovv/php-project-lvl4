@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LabelController extends Controller
 {
@@ -39,6 +40,10 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()) {
+            return redirect()->route('login');
+        }
+
         $data = $this->validate($request, [
             'name' => 'required|max:30|unique:labels',
             'description' => 'max:200',
@@ -71,6 +76,10 @@ class LabelController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!Auth::user()) {
+            return redirect()->route('login');
+        }
+
         $label = Label::findOrFail($id);
 
         $data = $this->validate($request, [

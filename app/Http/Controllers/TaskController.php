@@ -169,8 +169,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = Auth::user();
-        if (!$user) {
+        if (!Auth::user()) {
             return redirect()->route('login');
         }
 
