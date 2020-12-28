@@ -24,7 +24,6 @@ class LabelPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Label  $label
      * @return mixed
      */
     public function update(User $user)
