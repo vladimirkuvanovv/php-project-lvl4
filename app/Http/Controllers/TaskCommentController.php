@@ -18,7 +18,7 @@ class TaskCommentController extends Controller
     {
         $this->authorize('create', TaskComment::class);
 
-        $data = $this->validate($request,[
+        $data = $this->validate($request, [
             'comment' => 'min:5',
         ]);
 
