@@ -40,9 +40,7 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::user()) {
-            return redirect()->route('login');
-        }
+        $this->authorize('create', Label::class);
 
         $data = $this->validate($request, [
             'name' => 'required|max:30|unique:labels',
@@ -76,11 +74,9 @@ class LabelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!Auth::user()) {
-            return redirect()->route('login');
-        }
-
         $label = Label::findOrFail($id);
+
+        $this->authorize('update', $label);
 
         $data = $this->validate($request, [
             'name' => 'required|max:30',

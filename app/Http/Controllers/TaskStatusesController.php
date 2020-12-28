@@ -37,9 +37,7 @@ class TaskStatusesController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::user()) {
-            return redirect()->route('login');
-        }
+        $this->authorize('create', TaskStatus::class);
 
         $data = $this->validate($request, [
             'name' => 'required|max:20'
@@ -72,11 +70,9 @@ class TaskStatusesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!Auth::user()) {
-            return redirect()->route('login');
-        }
-
         $taskStatus = TaskStatus::findOrFail($id);
+
+        $this->authorize('update', $taskStatus);
 
         $data = $this->validate($request, [
             'name' => 'required|max:20|unique:task_statuses,name,' . $taskStatus->id,

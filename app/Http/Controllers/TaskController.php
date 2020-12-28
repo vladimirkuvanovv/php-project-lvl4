@@ -91,10 +91,8 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Task::class);
         $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login');
-        }
 
         $data = $this->validate($request, [
             'name'        => 'required|max:30',
@@ -169,11 +167,9 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!Auth::user()) {
-            return redirect()->route('login');
-        }
-
         $task = Task::findOrFail($id);
+
+        $this->authorize('update', $task);
 
         $data = $this->validate($request, [
             'name'           => 'required|max:30|unique:tasks,name,' . $task->id,

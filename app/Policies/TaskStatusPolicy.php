@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Task;
+use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TaskPolicy
+class TaskStatusPolicy
 {
     use HandlesAuthorization;
 
@@ -30,17 +30,5 @@ class TaskPolicy
     public function update(User $user)
     {
         return $user;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Task  $task
-     * @return mixed
-     */
-    public function delete(User $user, Task $task)
-    {
-        return $task->createdBy()->is($user);
     }
 }

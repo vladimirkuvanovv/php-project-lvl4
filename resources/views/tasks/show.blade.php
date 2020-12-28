@@ -23,12 +23,10 @@
 
     <h2>{{ __('task.comments') }}</h2>
 
-    @if(Auth::check())
-        {{ Form::open(['url' => route('task.comments.store', $task), 'method' => 'POST' , 'class' => 'w-50']) }}
-            {{ Form::textField('comment', __('task.content'), null) }}
-            {{ Form::submit(__('task.create_btn'), ['class' => 'btn btn-primary']) }}
-        {{ Form::close() }}
-    @endif
+    {{ Form::open(['url' => route('task.comments.store', $task), 'method' => 'POST' , 'class' => 'w-50']) }}
+        {{ Form::textField('comment', __('task.content'), null) }}
+        {{ Form::submit(__('task.create_btn'), ['class' => 'btn btn-primary']) }}
+    {{ Form::close() }}
 
     @foreach($task->comments as $comment)
         <div class="mt-3 comments">

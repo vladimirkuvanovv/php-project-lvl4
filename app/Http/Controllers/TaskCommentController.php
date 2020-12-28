@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\TaskComment;
 use Illuminate\Http\Request;
 
 class TaskCommentController extends Controller
@@ -15,6 +16,8 @@ class TaskCommentController extends Controller
      */
     public function store(Request $request, Task $task)
     {
+        $this->authorize('create', TaskComment::class);
+
         $data = $this->validate($request,[
             'comment' => 'min:5',
         ]);
